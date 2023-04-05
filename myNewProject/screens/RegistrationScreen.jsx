@@ -12,7 +12,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { logIn } from "../redux/authSlice";
+import { logIn } from "../redux/auth/authSlice";
 
 const initialState = {
   name: "",
@@ -20,7 +20,7 @@ const initialState = {
   email: "",
 };
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [state, setState] = useState(initialState);
   const [keyboardShown, setShownKeyboard] = useState(false);

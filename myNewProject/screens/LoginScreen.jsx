@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -10,16 +10,16 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   useWindowDimensions,
-} from "react-native";
-import { useDispatch } from "react-redux";
-import { logIn } from "../redux/authSlice";
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { logIn } from '../redux/auth/authSlice';
 
 const initialState = {
-  password: "",
-  email: "",
+  password: '',
+  email: '',
 };
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [state, setState] = useState(initialState);
@@ -40,12 +40,12 @@ const LoginScreen = () => {
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground
-          source={require("../assets/images/registrationBG.jpg")}
+          source={require('../assets/images/registrationBG.jpg')}
           style={styles.imageBG}
         >
           <KeyboardAvoidingView
             style={styles.wrapper}
-            behavior={Platform.OS == "android" ? "height " : "padding"}
+            behavior={Platform.OS == 'android' ? 'height ' : 'padding'}
           >
             <View
               style={{
@@ -57,8 +57,8 @@ const LoginScreen = () => {
               <Text style={styles.title}>Login</Text>
               <TextInput
                 value={state.email}
-                onChangeText={(value) =>
-                  setState((prevState) => ({ ...prevState, email: value }))
+                onChangeText={value =>
+                  setState(prevState => ({ ...prevState, email: value }))
                 }
                 placeholder="Email"
                 secureTextEntry={true}
@@ -67,8 +67,8 @@ const LoginScreen = () => {
               />
               <TextInput
                 value={state.password}
-                onChangeText={(value) =>
-                  setState((prevState) => ({ ...prevState, password: value }))
+                onChangeText={value =>
+                  setState(prevState => ({ ...prevState, password: value }))
                 }
                 placeholder="Password"
                 secureTextEntry={true}
@@ -85,9 +85,9 @@ const LoginScreen = () => {
               <View style={styles.btnBottom}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.navigate("Registration")}
+                  onPress={() => navigation.navigate('Registration')}
                 >
-                  <Text style={styles.textBtnBottom}>
+                  <Text style={styles.btnBottomText}>
                     Don't have an account? Register.
                   </Text>
                 </TouchableOpacity>
@@ -106,23 +106,23 @@ const styles = StyleSheet.create({
   },
   imageBG: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   wrapper: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-end",
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   form: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 32,
   },
   title: {
-    fontWeight: "500",
-    fontFamily: "Roboto",
-    textAlign: "center",
+    fontWeight: '500',
+    fontFamily: 'Roboto',
+    textAlign: 'center',
     fontSize: 30,
     lineHeight: 35,
     marginHorizontal: 16,
@@ -130,44 +130,44 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: '#F6F6F6',
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: "#E8E8E8",
+    borderColor: '#E8E8E8',
     paddingLeft: 16,
     marginHorizontal: 16,
     marginBottom: 16,
     fontSize: 16,
     lineHeight: 19,
-    color: "#BDBDBD",
-    fontFamily: "Roboto",
-    fontWeight: "400",
+    color: '#BDBDBD',
+    fontFamily: 'Roboto',
+    fontWeight: '400',
   },
   btn: {
     borderRadius: 100,
-    backgroundColor: "#FF6C00",
+    backgroundColor: '#FF6C00',
     height: 51,
     marginHorizontal: 16,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textBtn: {
-    fontFamily: "Roboto",
-    fontWeight: "400",
+    fontFamily: 'Roboto',
+    fontWeight: '400',
     fontSize: 16,
     lineHeight: 19,
-    color: "#FFFFFF",
+    color: '#FFFFFF',
   },
   btnBottom: {
     marginTop: 16,
   },
 
-  textBtnBottom: {
-    textAlign: "center",
-    color: "#1B4371",
+  btnBottomText: {
+    textAlign: 'center',
+    color: '#1B4371',
     fontSize: 16,
     lineHeight: 19,
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
   },
 });
 
