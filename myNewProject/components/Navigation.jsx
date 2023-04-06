@@ -11,8 +11,9 @@ import ProfileBtn from '../reusableComponents/ProfileButton';
 import LoginScreen from '../screens/LoginScreen';
 import RegistrationScreen from '../screens/RegistrationScreen';
 import CreateScreen from '../screens/CreateScreen';
-import PostsScreen from '../screens/PostsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import PostsScreen from '../screens/PostsScreen';
+
 const AuthStack = createNativeStackNavigator();
 const MainTab = createBottomTabNavigator();
 
@@ -38,22 +39,11 @@ const Navigation = () => {
     <MainTab.Navigator>
       <MainTab.Screen
         options={{
-          headerTitle: () => {
-            return (
-              <Header
-                title="Posts"
-                contWrp={{ paddingRight: Platform.OS == 'android' ? 0 : 30 }}
-              />
-            );
-          },
-          headerTitleAlign: 'center',
-          headerRight: () => {
-            return <LogOutBtn />;
-          },
           tabBarShowLabel: false,
           tabBarIcon: () => {
             return <HomeButton />;
           },
+          headerShown: false,
         }}
         name="PostsScreen"
         component={PostsScreen}
