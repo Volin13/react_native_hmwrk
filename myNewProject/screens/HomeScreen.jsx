@@ -1,11 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-
-const DefaultScreen = ({ navigation }) => {
+import { ScrollView, StyleSheet } from 'react-native';
+import { selectPosts } from '../redux/posts/postsSelectors';
+import PostCard from '../components/PostCard';
+import { useSelector } from 'react-redux';
+const HomeScreen = ({ navigation }) => {
+  const posts = useSelector(selectPosts);
   return (
-    <View style={styles.container}>
-      <PostsScreen />
-    </View>
+    <ScrollView style={{ marginHorizontal: 10 }}>
+      {posts?.length > 0 &&
+        posts.map(({ title, coords, location, photo }) => {
+          return (
+            <PostCard
+              key={coords.timestamp}
+              title={title}
+              coords={coords}
+              location={location}
+              photo={photo}
+              navigation={navigation}
+            />
+          );
+        })}
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -14,11 +29,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text: {
-    fontFamily: 'Roboto',
-    fontSize: 22,
-    marginBottom: 20,
-  },
 });
 
-export default DefaultScreen;
+export default HomeScreen;

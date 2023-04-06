@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-function MapButton() {
+function LocationButton(props) {
   return (
     <Svg
       width={24}
@@ -9,6 +9,7 @@ function MapButton() {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <Path
         clipRule="evenodd"
@@ -28,4 +29,4 @@ function MapButton() {
   );
 }
 
-export default MapButton;
+export default LocationButton;

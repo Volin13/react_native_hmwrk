@@ -1,11 +1,65 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import Header from '../components/Header';
+import LogOutBtn from '../reusableComponents/LogOutButton';
+import CommentsScreen from './CommentsScreen';
+import MapScreen from '../screens/MapScreen';
+import HomeScreen from './HomeScreen';
 
 const PostsScreen = () => {
+  const PostsStack = createNativeStackNavigator();
   return (
-    <View style={styles.container}>
-      <Text style={{ ...styles.text, color: '#FF6C00' }}>Posts Screen</Text>
-    </View>
+    <PostsStack.Navigator>
+      <PostsStack.Screen
+        options={{
+          headerTitle: () => {
+            return (
+              <Header
+                title="Posts"
+                contWrp={{ paddingRight: Platform.OS == 'android' ? 30 : 10 }}
+              />
+            );
+          },
+          headerTitleAlign: 'center',
+          headerRight: () => {
+            return <LogOutBtn />;
+          },
+        }}
+        name="Posts"
+        component={HomeScreen}
+      />
+      <PostsStack.Screen
+        options={{
+          headerTitle: () => {
+            return (
+              <Header
+                title="Coments"
+                contWrp={{ paddingRight: Platform.OS == 'android' ? 140 : 90 }}
+              />
+            );
+          },
+          headerTitleAlign: 'center',
+        }}
+        name="Comments"
+        component={CommentsScreen}
+      />
+      <PostsStack.Screen
+        options={{
+          headerTitle: () => {
+            return (
+              <Header
+                title="Location"
+                contWrp={{ paddingRight: Platform.OS == 'android' ? 140 : 100 }}
+              />
+            );
+          },
+          headerTitleAlign: 'center',
+        }}
+        name="Maps"
+        component={MapScreen}
+      />
+    </PostsStack.Navigator>
   );
 };
 const styles = StyleSheet.create({
@@ -13,11 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  text: {
-    fontFamily: 'Roboto',
-    fontSize: 22,
-    marginBottom: 20,
   },
 });
 
