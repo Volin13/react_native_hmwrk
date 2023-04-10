@@ -12,8 +12,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { logIn } from '../redux/auth/authSlice';
-
+import { SignIn } from '../redux/auth/authOperations';
 const initialState = {
   password: '',
   email: '',
@@ -33,7 +32,7 @@ const LoginScreen = ({ navigation }) => {
     setState(initialState);
   };
   const onLogin = () => {
-    dispatch(logIn());
+    dispatch(SignIn());
     console.log(`${state.email} + ${state.password}`);
   };
   return (

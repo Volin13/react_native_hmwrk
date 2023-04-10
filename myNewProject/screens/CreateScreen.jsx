@@ -19,8 +19,13 @@ import {
   selectLocationPermission,
 } from '../redux/permissions/permissionsSelectors';
 import { createPost } from '../redux/posts/postsSlice';
+import { selectAuthUserID } from '../redux/auth/authSelectors';
 import CameraButton from '../reusableComponents/CameraButton';
 import LocationButton from '../reusableComponents/LocationButton';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../config';
+const storage = getStorage();
 
 const initialState = {
   title: '',
@@ -31,6 +36,7 @@ const initialState = {
 
 function CreateScreen({ navigation }) {
   const [state, setState] = useState(initialState);
+  const userID = useSelector(selectAuthUserID);
   const cameraPermission = useSelector(selectCameraPermission);
   const locationPermission = useSelector(selectLocationPermission);
   const [camera, setCamera] = useState(null);
@@ -38,21 +44,48 @@ function CreateScreen({ navigation }) {
   const height = Math.round(((width - 32) * 4) / 3);
   const dispatch = useDispatch();
 
+  const uploadFileToStorage = async () => {
+    const res = await fetch(state.photo);
+    const file = await res.blob();
+    const storageRef = ref(
+      storage,
+      `postImages/${userID}/${state.coords.timestamp}`,
+    );
+    await uploadBytes(storageRef, file);
+    const uri = await getDownloadURL(storageRef);
+    return uri;
+  };
   const publishPost = async () => {
+    try {
+      const uri = await uploadFileToStorage();
+
+      const post = {
+        postId: state.coords.timestamp,
+        title: state.title,
+        location: state.location,
+        coords: state.coords,
+        uri,
+        comments: [],
+      };
+
+      const docRef = doc(db, 'posts', userID, state.coords.timestamp);
+      await setDoc(docRef, post);
+    } catch (error) {
+      console.log(error.message);
+    }
     dispatch(createPost({ ...state }));
     setState(initialState);
     navigation.navigate('PostsScreen');
   };
-
   const keyboardHide = () => {
     Keyboard.dismiss();
   };
   const takePhoto = async () => {
-    const photo = await camera.takePictureAsync();
+    const photo = await cameraRef.takePictureAsync();
     setState(prevState => {
       return { ...prevState, photo: photo.uri };
     });
-    const location = await Location.getCurrentPositionAsync();
+    const location = await Location.getLastKnownPositionAsync();
     setState(prevState => {
       return {
         ...prevState,
@@ -96,7 +129,12 @@ function CreateScreen({ navigation }) {
             ratio="4:3"
             style={{ ...styles.camera, height, width: Math.round(width) - 32 }}
             ref={setCamera}
-          ></Camera>
+          >
+            <TouchableOpacity
+              style={{ width: '100%', height: '100%' }}
+              onPress={keyboardHide}
+            ></TouchableOpacity>
+          </Camera>
           {state.photo && (
             <Image
               source={{ uri: state.photo }}

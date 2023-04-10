@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   StyleSheet,
   KeyboardAvoidingView,
@@ -10,14 +10,13 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   useWindowDimensions,
-} from "react-native";
-import { useDispatch } from "react-redux";
-import { logIn } from "../redux/auth/authSlice";
-
+} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { SignUp } from '../redux/auth/authOperations';
 const initialState = {
-  name: "",
-  password: "",
-  email: "",
+  name: '',
+  password: '',
+  email: '',
 };
 
 const RegistrationScreen = ({ navigation }) => {
@@ -33,19 +32,19 @@ const RegistrationScreen = ({ navigation }) => {
   };
 
   const onRegistration = () => {
-    dispatch(logIn());
+    dispatch(SignUp());
     console.log(`${state.name} +${state.email} + ${state.password}`);
   };
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground
-          source={require("../assets/images/registrationBG.jpg")}
+          source={require('../assets/images/registrationBG.jpg')}
           style={styles.imageBG}
         >
           <KeyboardAvoidingView
             style={styles.wrapper}
-            behavior={Platform.OS == "android" ? "height " : "padding"}
+            behavior={Platform.OS == 'android' ? 'height ' : 'padding'}
           >
             <View
               style={{
@@ -57,8 +56,8 @@ const RegistrationScreen = ({ navigation }) => {
               <Text style={styles.title}>Registration</Text>
               <TextInput
                 value={state.name}
-                onChangeText={(value) =>
-                  setState((prevState) => ({ ...prevState, name: value }))
+                onChangeText={value =>
+                  setState(prevState => ({ ...prevState, name: value }))
                 }
                 placeholder="Name"
                 style={styles.input}
@@ -66,8 +65,8 @@ const RegistrationScreen = ({ navigation }) => {
               />
               <TextInput
                 value={state.email}
-                onChangeText={(value) =>
-                  setState((prevState) => ({ ...prevState, email: value }))
+                onChangeText={value =>
+                  setState(prevState => ({ ...prevState, email: value }))
                 }
                 placeholder="Email"
                 secureTextEntry={true}
@@ -76,8 +75,8 @@ const RegistrationScreen = ({ navigation }) => {
               />
               <TextInput
                 value={state.password}
-                onChangeText={(value) =>
-                  setState((prevState) => ({ ...prevState, password: value }))
+                onChangeText={value =>
+                  setState(prevState => ({ ...prevState, password: value }))
                 }
                 placeholder="Password"
                 secureTextEntry={true}
@@ -94,7 +93,7 @@ const RegistrationScreen = ({ navigation }) => {
               <View style={styles.btnBottom}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.navigate("Login")}
+                  onPress={() => navigation.navigate('Login')}
                 >
                   <Text style={styles.btnTextBottom}>
                     Already have the account? Login.
@@ -115,23 +114,23 @@ const styles = StyleSheet.create({
   },
   imageBG: {
     flex: 1,
-    resizeMode: "cover",
+    resizeMode: 'cover',
   },
   wrapper: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-end",
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   form: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingTop: 92,
   },
   title: {
-    fontFamily: "Roboto",
-    fontWeight: "500",
-    textAlign: "center",
+    fontFamily: 'Roboto',
+    fontWeight: '500',
+    textAlign: 'center',
     fontSize: 30,
     lineHeight: 35,
     marginHorizontal: 16,
@@ -139,44 +138,44 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: '#F6F6F6',
     borderWidth: 1,
     borderRadius: 8,
-    borderColor: "#E8E8E8",
+    borderColor: '#E8E8E8',
     paddingLeft: 16,
     marginHorizontal: 16,
     marginBottom: 16,
     fontSize: 16,
     lineHeight: 19,
-    color: "#BDBDBD",
-    fontFamily: "Roboto",
-    fontWeight: "400",
+    color: '#BDBDBD',
+    fontFamily: 'Roboto',
+    fontWeight: '400',
   },
   btn: {
     borderRadius: 100,
-    backgroundColor: "#FF6C00",
+    backgroundColor: '#FF6C00',
     height: 51,
     marginHorizontal: 16,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnText: {
-    fontFamily: "Roboto",
-    fontWeight: "400",
+    fontFamily: 'Roboto',
+    fontWeight: '400',
     fontSize: 16,
     lineHeight: 19,
-    color: "#FFFFFF",
+    color: '#FFFFFF',
   },
   btnBottom: {
     marginTop: 16,
   },
 
   btnTextBottom: {
-    textAlign: "center",
-    color: "#1B4371",
+    textAlign: 'center',
+    color: '#1B4371',
     fontSize: 16,
     lineHeight: 19,
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
   },
 });
 

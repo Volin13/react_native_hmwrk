@@ -1,18 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import { authSignIn, authSignOut, authSignUp } from './authOperations';
+
+const initialState = {
+  userName: '',
+  email: '',
+  userID: '',
+};
 
 export const authSlice = createSlice({
-  name: "auth",
-  initialState: {
-    isLoggedIn: false,
-  },
+  name: 'auth',
+  initialState,
   reducers: {
-    logIn: (state, action) => {
-      return { isLoggedIn: true };
+    setUserData: (state, action) => {
+      return {
+        userName: action.payload.userName,
+        email: action.payload.email,
+        userID: action.payload.userID,
+      };
     },
-    logOut: (state, action) => {
-      return { isLoggedIn: false };
+    setUserID: (state, action) => {
+      return { ...state, UserID: action.payload };
     },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(authSignUp.fulfilled, (state, action) => {
+        return action.payload;
+      })
+      .addCase(authSignIn.fulfilled, (state, action) => {
+        return action.payload;
+      })
+      .addCase(authSignOut.fulfilled, () => {
+        return initialState;
+      });
   },
 });
 
-export const { logIn, logOut } = authSlice.actions;
+export const { setUserData, setUserID } = authSlice.actions;
